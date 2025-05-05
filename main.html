@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Поставить свечку</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .flame {
+      width: 10px;
+      height: 20px;
+      background: radial-gradient(ellipse at center, orange 0%, transparent 80%);
+      border-radius: 50% 50% 50% 50%;
+      animation: flicker 0.3s infinite alternate;
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scaleY(1); opacity: 1; }
+      100% { transform: translateX(-50%) scaleY(1.2); opacity: 0.8; }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen px-4">
+  <h1 class="text-3xl font-bold mb-6">Поставить свечку</h1>
+
+  <div class="mb-4 flex flex-col sm:flex-row gap-2">
+    <input id="candle-text" type="text" placeholder="За что ставим свечку?" class="px-4 py-2 text-black rounded w-72">
+    <button onclick="addCandle()" class="bg-yellow-600 px-4 py-2 rounded hover:bg-yellow-500 transition">Поставить свечку</button>
+  </div>
+
+  <div id="candle-area" class="mt-10 flex gap-6 flex-wrap justify-center"></div>
+
+  <script>
+    function addCandle() {
+      const message = document.getElementById('candle-text').value.trim();
+      if (!message) {
+        alert("Введите текст для свечки!");
+        return;
+      }
+
+      const candle = document.createElement('div');
+      candle.className = 'relative flex flex-col items-center';
+
+      candle.innerHTML = `
+        <div class="w-2 h-16 bg-yellow-200 rounded-sm"></div>
+        <div class="flame"></div>
+        <p class="mt-3 text-center text-sm max-w-[100px]">${message}</p>
+      `;
+
+      document.getElementById('candle-area').appendChild(candle);
+      document.getElementById('candle-text').value = '';
+    }
+  </script>
+</body>
+</html>
